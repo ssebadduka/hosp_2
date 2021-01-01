@@ -14,6 +14,7 @@ def add_show(request):
           cp =  fm.cleaned_data['complain']
           gn =  fm.cleaned_data['gender']
           ad =  fm.cleaned_data['address']
+          print(pn)
           preg = Patient(patient_name=pn, patient_code=pc, complain=cp, gender=gn, address=ad)
           preg.save()
           messages.success(request,'Patient Successfuly Registered')
