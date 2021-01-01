@@ -1,0 +1,103 @@
+{% extends 'patient/base.html' %}
+{% block content %}
+<div class="row">
+
+    <div class="row-sm-4 ">
+    </div class="form-group">
+    {% if messages %}
+    <ul class="message">
+        {% for message in messages %}
+        <li>
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    </div>
+    
+<h4 class="text-center alert alert-info">Add patient</h4>
+<form action="" method="POST">
+    {% csrf_token %}
+<!-- {{form.as_table}} -->
+<div class="row">
+    <div class="col">
+        <label for="staticEmail" class="col-sm-2 col-form-label">PatientName</label>
+      <!-- <input type="text" class="form-control" placeholder="First name"> -->
+      {{form.patient_name}}
+    </div>
+    <div class="col">
+        <label for="staticEmail" class="col-sm-2 col-form-label">PatientCode</label>
+        {{form.patient_code}}
+      <!-- <input type="text" class="form-control" placeholder="Last name"> -->
+
+    </div>
+    <div class="col">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Complain</label>
+        {{form.complain}}
+      <!-- <input type="text" class="form-control" placeholder="First name"> -->
+    </div>
+    <div class="col">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Gender</label>
+        {{form.gender}}
+      <!-- <input type="text" class="form-control" placeholder="Last name"> -->
+    </div>
+    <div class="col">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Address</label>
+        {{form.address}}
+      <!-- <input type="text" class="form-control" placeholder="Last name"> -->
+    </div>
+  </div>
+<br>
+<input type="submit" class="btn btn-success" value="add">
+</form>
+
+<div >
+    <br>
+    <h4 class="text-center alert alert-info">Show Patient</h4>
+    {% if pati %}
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">patientname</th>
+                <th scope="col">patientcode</th>
+                <th scope="col">complain</th>
+                <th scope="col">gender</th>
+                <th scope="col">address</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for pt in pati %}
+            <tr>
+                <th scope="row">{{pt.id}}</th>
+                <td>{{pt.patient_name}}</td>
+                <td>{{pt.patient_code}}</td>
+                <td>{{pt.complain}}</td>
+                <td>{{pt.gender}}</td>
+                <td>{{pt.address}}</td>
+                <td><a href="{% url 'update_pat' pt.id %}" class="btn btn-warning btn-sm">edit</a></td>
+                
+                <!-- <td><a href="#" class="btn btn-danger btn-sm">delete </a></td> -->
+                <td>
+                    <form action="{% url 'delete_pat' pt.id %}"
+                     method="post">{% csrf_token %}
+                    <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                </form>
+            </td>
+            </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        
+    {% else %}
+    <h4 class="text-center alert alert-warning">No Records</h4>
+    {% endif %}
+</div>
+</div>
+</div>
+{% endblock content %}
